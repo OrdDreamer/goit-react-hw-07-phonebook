@@ -1,16 +1,34 @@
+import styles from './app.module.css';
+import Section from './Section/Section';
+import { PhonebookForm } from './PhonebookForm/PhonebookForm';
+import ContactsList from './ContactsList/ContactsList';
+import Filter from './Filter/Filter';
+
 export const App = () => {
+
   return (
     <div
       style={{
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'start',
         alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
+        color: '#010101',
+        padding: '50px',
+        backgroundColor: 'rgb(231, 236, 242)',
+        boxSizing: 'border-box',
       }}
     >
-      React homework template
+      <div className={styles.phonebook}>
+        <Section title={'Phonebook'}>
+          <PhonebookForm />
+        </Section>
+        <Filter />
+        <Section title={'Contacts List'}>
+          <ContactsList />
+        </Section>
+      </div>
     </div>
   );
 };
