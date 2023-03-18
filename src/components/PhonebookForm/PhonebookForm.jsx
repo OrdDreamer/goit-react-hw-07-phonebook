@@ -1,20 +1,20 @@
 import styles from './phonebook-form.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/slices/contactsSlice';
-import { getContacts } from '../../redux/selectors';
+import { selectContacts } from '../../redux/selectors';
+import { addContact } from '../../redux/operations';
 
 export const PhonebookForm = () => {
 
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
-
-  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (contacts.findIndex((e) => e.name === name) === -1) {
+    if (contacts.findIndex((e) => e.name.toLowerCase() === name.toLowerCase()) === -1) {
       dispatch(addContact({ name, number }));
       reset();
     } else {

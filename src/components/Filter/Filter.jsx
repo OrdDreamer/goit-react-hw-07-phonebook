@@ -1,11 +1,11 @@
 import styles from './filter.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSearchQuery } from '../../redux/selectors';
+import { selectSearchQuery } from '../../redux/selectors';
 import { changeSearchQuery } from '../../redux/slices/filtersSlice';
 
 const Filter = () => {
 
-  const term = useSelector(getSearchQuery);
+  const term = useSelector(selectSearchQuery);
   const dispatch = useDispatch();
 
   const handleChange = (event) => {

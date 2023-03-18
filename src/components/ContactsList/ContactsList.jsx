@@ -1,26 +1,29 @@
 import styles from './contacts-list.module.css';
 import ContactItem from '../ContactItem/ContactItem';
 import { useSelector } from 'react-redux';
-import { getContacts, getSearchQuery } from '../../redux/selectors';
+import { selectFilteredContacts } from '../../redux/selectors';
 
 const ContactsList = () => {
 
-  const contacts = useSelector(getContacts);
-  const searchQuery = useSelector(getSearchQuery);
+  const contacts = useSelector(selectFilteredContacts);
 
   return (
-    <ul className={styles.contactsList}>
-      {contacts.filter((e) => {
-        return e.name.toLowerCase().includes(searchQuery.toLowerCase())
-      }).map(({ id, name, number }) => (
-        <ContactItem
-          key={id}
-          id={String(id)}
-          name={name}
-          number={number}
-        />
-      ))}
-    </ul>
+    <>
+      {
+        !!contacts.length
+          ? (<ul className={styles.contactsList}>
+            {contacts.map(({ id, name, number }) => (
+              <ContactItem
+                key={id}
+                id={String(id)}
+                name={name}
+                number={number}
+              />
+            ))}
+          </ul>)
+          : (<p className={styles.emptyText}>No contacts in list, yet</p>)
+      }
+    </>
   );
 };
 
