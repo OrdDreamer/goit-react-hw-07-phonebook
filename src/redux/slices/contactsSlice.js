@@ -17,33 +17,34 @@ const contactsSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  extraReducers: {
-    [fetchContacts.pending]: handlePending,
-    [fetchContacts.fulfilled](state, { payload }) {
-      state.isLoading = false;
-      state.error = null;
-      state.items = payload;
-    },
-    [fetchContacts.rejected]: handleRejected,
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchContacts.pending, handlePending)
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = payload;
+      })
+      .addCase(fetchContacts.rejected, handleRejected)
 
-    [addContact.pending]: handlePending,
-    [addContact.fulfilled](state, { payload }) {
-      state.isLoading = false;
-      state.error = null;
-      state.items.unshift(payload);
-    },
-    [addContact.rejected]: handleRejected,
+      .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items.unshift(payload);
+      })
+      .addCase(addContact.rejected, handleRejected)
 
-    [deleteContact.pending]: handlePending,
-    [deleteContact.fulfilled](state, { payload }) {
-      state.isLoading = false;
-      state.error = null;
-      state.items.splice(
-        state.items.findIndex(e => e.id === payload),
-        1
-      );
-    },
-    [deleteContact.rejected]: handleRejected,
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items.splice(
+          state.items.findIndex(e => e.id === payload),
+          1,
+        );
+      })
+      .addCase(deleteContact.rejected, handleRejected);
   },
 });
 
